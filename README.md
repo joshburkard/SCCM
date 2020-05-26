@@ -59,3 +59,13 @@ Set-SCCMBaselineConfigurationItem -SiteServer $SiteServer -SiteCode $SiteCode -B
 # sets the assigned configuration item to 'Latest'
 Set-SCCMBaselineConfigurationItem -SiteServer $SiteServer -SiteCode $SiteCode -BaselineName $BaselineName -ConfigurationItemName $ConfigurationItemName -Latests
 ```
+
+## Get-ClientCollectionVariables
+
+this function get all collection variables from the local SCCM client.
+
+to use this function, it must be executed in the context of NT AUTHORITY SYSTEM.
+
+```PowerShell
+Get-ClientCollectionVariables
+```

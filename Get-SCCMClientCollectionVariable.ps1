@@ -1,5 +1,5 @@
 
-function Get-ClientCollectionVariables {
+function Get-SCCMClientCollectionVariables {
     <#
         .SYNOPSIS
             This function gets the Device and Collection variables from the local SCCM client
@@ -10,7 +10,7 @@ function Get-ClientCollectionVariables {
             to run this function, it must be started in the context of NT AUTHORITY SYSTEM
 
         .EXAMPLE
-            Get-ClientCollectionVariables
+            Get-SCCMClientCollectionVariables
 
     #>
     [CmdletBinding()]
@@ -86,7 +86,10 @@ function Get-ClientCollectionVariables {
         }
         if ( [boolean]$UnprotectedData ) {
             $i = 0
+            # use only every second byte
             $Bytes = $UnprotectedData | Where-Object { $i % 2 -eq 0; $i++ }
+            # dont use the last byte
+            $Bytes = @( $Bytes )[0 .. ( @( $Bytes ).Count - 2 ) ]
             $result = [System.Text.Encoding]::ASCII.GetString( $Bytes )
             return $result
         }
