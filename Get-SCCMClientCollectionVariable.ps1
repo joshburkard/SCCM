@@ -58,8 +58,6 @@ function Get-SCCMClientCollectionVariables {
                 this function decrypt the value, which was encrypted by the SCCM client
 
                 this function must be run in the context of NT AUTHORITY SYSTEM
-
-                this function shouldn't be made public
             
             .PARAMETER value
                 the string value, which is encrypted
