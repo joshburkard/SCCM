@@ -1,4 +1,3 @@
-
 function Get-SCCMClientCollectionVariables {
     <#
         .SYNOPSIS
@@ -8,14 +7,20 @@ function Get-SCCMClientCollectionVariables {
             This function gets the Device and Collection variables from the local SCCM client
 
             to run this function, it must be started in the context of NT AUTHORITY SYSTEM
+        
+        .PARMETER Name
+            defines the Name of the Variable to query
 
         .EXAMPLE
             Get-SCCMClientCollectionVariables
 
+        .EXAMPLE
+            Get-SCCMClientCollectionVariables -Name 'Stage'
+
     #>
     [CmdletBinding()]
     Param (
-
+        [string]$Name
     )
     Add-Type -AssemblyName System.Security
 
@@ -101,7 +106,9 @@ function Get-SCCMClientCollectionVariables {
     }
 
     $variables = Get-WmiObject -Namespace "ROOT\ccm\Policy\Machine\ActualConfig" -Class "CCM_CollectionVariable"
+    if ( [boolean]$Name ) {
+        $variables = $variables | Where-Object { $_.Name -eq $Name }
+    }
     $result = $variables | Select-Object Name, @{ Name="Value"; Expression={ Unprotect-SCCMValue -Value $_.value } }
     return $result
 }
-
