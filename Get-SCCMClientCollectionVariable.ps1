@@ -110,5 +110,5 @@ function Get-SCCMClientCollectionVariables {
         $variables = $variables | Where-Object { $_.Name -eq $Name }
     }
     $result = $variables | Select-Object Name, @{ Name="Value"; Expression={ Unprotect-SCCMValue -Value $_.value } }
-    return $result
+    return ( $result | Sort-Object Name )
 }
