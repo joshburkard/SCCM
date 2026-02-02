@@ -25,14 +25,15 @@ function Get-SCCMScriptExecutionStatus {
         .NOTES
             File-Name:  Get-SCCMScriptExecutionStatus.ps1
             Author:     Josh Burkard - josh@burkard.it
-            Version:    0.1.00005
+            Version:    0.1.00006
 
             Changelog:
                 0.1.00001, 2019-07-29, Josua Burkard, initial creation
                 0.1.00002, 2019-08-26, Josua Burkard, general script changes
                 0.1.00003, 2019-08-29, Josua Burkard, working version
                 0.1.00004, 2019-08-29, Josua Burkard, result was cutted after 4000 chars
-                0.1.00005, 2020-05-11, Josh Burkard, modifyining public version
+                0.1.00005, 2020-05-11, Josua Burkard, modifyining public version
+                0.1.00006, 2025-02-02, Josua Burkard, fixing .GET()
 
             Links:
 
@@ -79,8 +80,6 @@ function Get-SCCMScriptExecutionStatus {
             if ( $TaskStatus.CompletedClients -gt 0 ) {
                 $WMIQuery = "SELECT * FROM SMS_ScriptsExecutionStatus where ClientOperationId=$( $OperationID )"
                 $ClientStatus = Get-WmiObject -Namespace $Namespace -ComputerName $SiteServer -Query $WMIQuery
-                $ClientStatus.get
-                $ClientStatus.Get()
                 $Results = @()
                 if ( $TaskStatus.CompletedClients -eq $TaskStatus.TotalClients ) {
                     $Status = "all clients completed"
